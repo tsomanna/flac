@@ -57,7 +57,11 @@ jobs:
           cp COPYING.* flac
           cp AUTHORS flac
           cp README* flac
-          cp man/*.html flac
+          if [ "${{ matrix.arch }}" = "arm64" ]; then
+            cp man/*.html flac 2>/dev/null || true
+          else
+            cp man/*.html flac
+          fi
 
       - name: Upload logs on failure
         uses: actions/upload-artifact@v7
